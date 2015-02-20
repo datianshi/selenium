@@ -12,6 +12,7 @@ type NavigateFunc func(core.Page) (core.Page, error)
 func (current NavigateFunc) Next(next NavigateFunc) NavigateFunc {
 	return func(page core.Page) (core.Page, error) {
 		p, err := current(page)
+		time.Sleep(3 * time.Second)
 		if err != nil {
 			return p, err
 		}
@@ -33,7 +34,6 @@ var GoToLoginPage NavigateFunc = func(page core.Page) (core.Page, error) {
 }
 
 var Login NavigateFunc = func(page core.Page) (core.Page, error) {
-	time.Sleep(5 * time.Second)
 	err := page.Find("input[name='username']").Fill(os.Getenv("USERNAME"))
 	if err != nil {
 		return page, err
@@ -43,5 +43,10 @@ var Login NavigateFunc = func(page core.Page) (core.Page, error) {
 		return page, err
 	}
 	err = page.FindByButton("Sign in").Click()
+	return page, err
+}
+
+var GoToPivotalCF NavigateFunc = func(page core.Page) (core.Page, error) {
+	err := page.Find("a[href='/products/pivotal-cf']").Click()
 	return page, err
 }

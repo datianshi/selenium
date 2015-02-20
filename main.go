@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	. "github.com/datianshi/pivotal-download/pages"
+	. "github.com/datianshi/selenium/pages"
 	agouti "github.com/sclevine/agouti/core"
 )
 
@@ -27,7 +27,7 @@ func drive() (err error) {
 	if err != nil {
 		return
 	}
-	nav := GoToNetwork.Next(GoToLoginPage).Next(Login)
+	nav := GoToNetwork.Next(GoToLoginPage).Next(Login).Next(GoToPivotalCF)
 	_, err = nav(page)
 	return
 }
